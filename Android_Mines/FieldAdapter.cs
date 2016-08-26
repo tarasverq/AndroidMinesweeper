@@ -1,4 +1,4 @@
-using Android.Content;
+п»їusing Android.Content;
 using Android.Views;
 using Android.Widget;
 using Object = Java.Lang.Object;
@@ -6,7 +6,7 @@ using Object = Java.Lang.Object;
 namespace Android_Mines
 {
     /// <summary>
-    /// Адаптер чтоб подцепить игровое поле к GridView
+    /// РђРґР°РїС‚РµСЂ С‡С‚РѕР± РїРѕРґС†РµРїРёС‚СЊ РёРіСЂРѕРІРѕРµ РїРѕР»Рµ Рє GridView
     /// </summary>
     internal class FieldAdapter : BaseAdapter
     {
@@ -16,7 +16,7 @@ namespace Android_Mines
         public override int Count => FieldModel.Count;
 
         /// <summary>
-        /// Массив с картинками полей без бомб
+        /// РњР°СЃСЃРёРІ СЃ РєР°СЂС‚РёРЅРєР°РјРё РїРѕР»РµР№ Р±РµР· Р±РѕРјР±
         /// </summary>
         private static readonly int[] CellImages = 
         {
@@ -33,14 +33,14 @@ namespace Android_Mines
 
         public FieldAdapter(Context context, int cols, int rows,int mines, int cellWidth)
         {
-            //Ранее подобранная ширина картинки
+            //Р Р°РЅРµРµ РїРѕРґРѕР±СЂР°РЅРЅР°СЏ С€РёСЂРёРЅР° РєР°СЂС‚РёРЅРєРё
             this.cellWidth = cellWidth;
             this.context = context;
             FieldModel = new Logic(cols, rows,  mines);
         }
 
         /// <summary>
-        /// Выбирает изображение для каждой конкретной ячейки
+        /// Р’С‹Р±РёСЂР°РµС‚ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РґР»СЏ РєР°Р¶РґРѕР№ РєРѕРЅРєСЂРµС‚РЅРѕР№ СЏС‡РµР№РєРё
         /// </summary>
         /// <param name="position"></param>
         /// <param name="convertView"></param>
@@ -50,31 +50,31 @@ namespace Android_Mines
         {
             
             ImageView view;
-            //Или новый ImageView
+            //РР»Рё РЅРѕРІС‹Р№ ImageView
             if (convertView == null)
             {
-                //Задаем атрибуты картинки, размеры картинки в пикселях, тип масштабирования, отступы
+                //Р—Р°РґР°РµРј Р°С‚СЂРёР±СѓС‚С‹ РєР°СЂС‚РёРЅРєРё, СЂР°Р·РјРµСЂС‹ РєР°СЂС‚РёРЅРєРё РІ РїРёРєСЃРµР»СЏС…, С‚РёРї РјР°СЃС€С‚Р°Р±РёСЂРѕРІР°РЅРёСЏ, РѕС‚СЃС‚СѓРїС‹
                 view = new ImageView(context) {LayoutParameters = new ViewGroup.LayoutParams(cellWidth, cellWidth) };
                 view.SetAdjustViewBounds(false);
                 view.SetScaleType(ImageView.ScaleType.CenterCrop);
                 view.SetPadding(0, 0, 0, 0);
             }
-            //Или обновляем существующий
+            //РР»Рё РѕР±РЅРѕРІР»СЏРµРј СЃСѓС‰РµСЃС‚РІСѓСЋС‰РёР№
             else view = (ImageView)convertView; 
 
-            //Получаем текущую ячейку из класса с логикой
+            //РџРѕР»СѓС‡Р°РµРј С‚РµРєСѓС‰СѓСЋ СЏС‡РµР№РєСѓ РёР· РєР»Р°СЃСЃР° СЃ Р»РѕРіРёРєРѕР№
             Cell currentCell = FieldModel.GetCell(position);
             switch (currentCell.CellState)
             {
                 case CellState.Closed:
-                    //Закрытое поле
+                    //Р—Р°РєСЂС‹С‚РѕРµ РїРѕР»Рµ
                     view.SetImageResource(Resource.Drawable.Closed);
                     break;
                 case CellState.Opened:
                     switch (currentCell.MineState)
                     {
                         case MineState.No:
-                            //Дергаем картинку из массива картинок без бомб
+                            //Р”РµСЂРіР°РµРј РєР°СЂС‚РёРЅРєСѓ РёР· РјР°СЃСЃРёРІР° РєР°СЂС‚РёРЅРѕРє Р±РµР· Р±РѕРјР±
                             view.SetImageResource(CellImages[currentCell.MinesAround]);
                             break;
                         case MineState.Yes:
@@ -88,7 +88,7 @@ namespace Android_Mines
         }
 
         /// <summary>
-        /// Заглушка
+        /// Р—Р°РіР»СѓС€РєР°
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
@@ -99,7 +99,7 @@ namespace Android_Mines
         }
 
         /// <summary>
-        /// Заглушка
+        /// Р—Р°РіР»СѓС€РєР°
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>

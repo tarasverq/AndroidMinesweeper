@@ -40,6 +40,7 @@ namespace Android_Mines
         protected void PrintTop()
         {
             GetTop();
+            //Сторонний класс для отрисовки текстовых таблиц
             ConsoleTable table = new ConsoleTable("#", "Имя", "Очки");
             int i = 1;
             //Сортируем, возможно появился новый лидер!

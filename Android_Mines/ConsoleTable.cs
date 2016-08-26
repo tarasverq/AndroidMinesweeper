@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 namespace Android_Mines
 {
     /// <summary>
-    /// Создает текстовые таблицы.
+    /// РЎРѕР·РґР°РµС‚ С‚РµРєСЃС‚РѕРІС‹Рµ С‚Р°Р±Р»РёС†С‹.
     /// https://github.com/khalidabuhakmeh/ConsoleTables
     /// </summary>
     public class ConsoleTable

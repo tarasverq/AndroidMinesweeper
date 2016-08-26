@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 
 namespace Android_Mines
@@ -11,7 +11,7 @@ namespace Android_Mines
     }
 
     /// <summary>
-    /// Класс с игровой логикой
+    /// РљР»Р°СЃСЃ СЃ РёРіСЂРѕРІРѕР№ Р»РѕРіРёРєРѕР№
     /// </summary>
     internal class Logic
     {
@@ -46,10 +46,10 @@ namespace Android_Mines
 
        
         /// <summary>
-        /// Инициализация игрового поля
+        /// РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РёРіСЂРѕРІРѕРіРѕ РїРѕР»СЏ
         /// </summary>
-        /// <param name="fistClickX">Х первого клика</param>
-        /// <param name="fistClickY">Y первого клика</param>
+        /// <param name="fistClickX">РҐ РїРµСЂРІРѕРіРѕ РєР»РёРєР°</param>
+        /// <param name="fistClickY">Y РїРµСЂРІРѕРіРѕ РєР»РёРєР°</param>
         private void InitField(int fistClickX, int fistClickY)
         {
             Random rnd = new Random((int)DateTime.Now.Ticks);
@@ -61,14 +61,14 @@ namespace Android_Mines
                     x1 = rnd.Next(Cols);
                     y1 = rnd.Next(Rows);
                 }
-                while (IsMineSet(x1, y1) || (fistClickX == x1 && fistClickY == y1)); //А вдруг?
+                while (IsMineSet(x1, y1) || (fistClickX == x1 && fistClickY == y1)); //Рђ РІРґСЂСѓРі?
                 cellField[x1, y1].MineState = MineState.Yes;
             }
             CalcMinesAround();
         }
 
         /// <summary>
-        /// Проверка наличия бомбы в ячейке
+        /// РџСЂРѕРІРµСЂРєР° РЅР°Р»РёС‡РёСЏ Р±РѕРјР±С‹ РІ СЏС‡РµР№РєРµ
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
@@ -82,7 +82,7 @@ namespace Android_Mines
         }
 
         /// <summary>
-        /// Подсчет количества мин в округе ячейки
+        /// РџРѕРґСЃС‡РµС‚ РєРѕР»РёС‡РµСЃС‚РІР° РјРёРЅ РІ РѕРєСЂСѓРіРµ СЏС‡РµР№РєРё
         /// </summary>
         private void CalcMinesAround()
         {
@@ -91,7 +91,7 @@ namespace Android_Mines
                 for (int j = 0; j < Rows; j++)
                 {
                     if (IsMineSet(i, j)) continue; 
-                    //Если этой ячейке нужно считать кол-во бомб, проверяем всё вокруг нее.
+                    //Р•СЃР»Рё СЌС‚РѕР№ СЏС‡РµР№РєРµ РЅСѓР¶РЅРѕ СЃС‡РёС‚Р°С‚СЊ РєРѕР»-РІРѕ Р±РѕРјР±, РїСЂРѕРІРµСЂСЏРµРј РІСЃС‘ РІРѕРєСЂСѓРі РЅРµРµ.
                     for (int x = i - 1; x <= i + 1; x++)
                     {
                         for (int y = j - 1; y <= j + 1; y++)
@@ -105,9 +105,9 @@ namespace Android_Mines
         }
 
         /// <summary>
-        /// Получает ячейку по ID
+        /// РџРѕР»СѓС‡Р°РµС‚ СЏС‡РµР№РєСѓ РїРѕ ID
         /// </summary>
-        /// <param name="position">ID ячейки</param>
+        /// <param name="position">ID СЏС‡РµР№РєРё</param>
         /// <returns></returns>
         internal Cell GetCell(int position)
         {
@@ -118,9 +118,9 @@ namespace Android_Mines
         }
 
         /// <summary>
-        /// Обработка клика по ячейке
+        /// РћР±СЂР°Р±РѕС‚РєР° РєР»РёРєР° РїРѕ СЏС‡РµР№РєРµ
         /// </summary>
-        /// <param name="position">ID ячейки</param>
+        /// <param name="position">ID СЏС‡РµР№РєРё</param>
         internal void ClickOnCell(int position)
         {
             int x = position % Cols;
@@ -132,13 +132,13 @@ namespace Android_Mines
                     switch (cellField[x, y].MineState)
                     {
                         case MineState.No:
-                            //Если это первый клик -- генерируем карту
+                            //Р•СЃР»Рё СЌС‚Рѕ РїРµСЂРІС‹Р№ РєР»РёРє -- РіРµРЅРµСЂРёСЂСѓРµРј РєР°СЂС‚Сѓ
                             if (!intialized)
                             {
                                 InitField(x, y);
                                 intialized = true;
                             }
-                            //Открываем выбранную и соседние клетки
+                            //РћС‚РєСЂС‹РІР°РµРј РІС‹Р±СЂР°РЅРЅСѓСЋ Рё СЃРѕСЃРµРґРЅРёРµ РєР»РµС‚РєРё
                             OpenCells(x, y);
                             if (Cols * Rows - mines == OpenedCells)
                             {
@@ -148,7 +148,7 @@ namespace Android_Mines
                             }
                             break;
                         case MineState.Yes:
-                            //Облом. Открываем всё поле.
+                            //РћР±Р»РѕРј. РћС‚РєСЂС‹РІР°РµРј РІСЃС‘ РїРѕР»Рµ.
                             State = GameState.Fail;
                             OpenField();
                             break;
@@ -164,7 +164,7 @@ namespace Android_Mines
         }
 
         /// <summary>
-        /// Открывает все ячейки на поле
+        /// РћС‚РєСЂС‹РІР°РµС‚ РІСЃРµ СЏС‡РµР№РєРё РЅР° РїРѕР»Рµ
         /// </summary>
         private void OpenField()
         {
@@ -174,7 +174,7 @@ namespace Android_Mines
         }
 
         /// <summary>
-        /// Закрывает все ячейки на поле и обнуляет счетчики
+        /// Р—Р°РєСЂС‹РІР°РµС‚ РІСЃРµ СЏС‡РµР№РєРё РЅР° РїРѕР»Рµ Рё РѕР±РЅСѓР»СЏРµС‚ СЃС‡РµС‚С‡РёРєРё
         /// </summary>
         internal void CloseField()
         {
@@ -187,18 +187,18 @@ namespace Android_Mines
         }
 
         /// <summary>
-        /// Открытие пустых ячеек
+        /// РћС‚РєСЂС‹С‚РёРµ РїСѓСЃС‚С‹С… СЏС‡РµРµРє
         /// http://www.opita.net/node/696
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
         private void OpenCells(int x, int y)
         {
-            //Если так, то диагонали открываются неверно
+            //Р•СЃР»Рё С‚Р°Рє, С‚Рѕ РґРёР°РіРѕРЅР°Р»Рё РѕС‚РєСЂС‹РІР°СЋС‚СЃСЏ РЅРµРІРµСЂРЅРѕ
             //int[] dx = { 0, 0, 1, -1, 1, 1, -1, -1, 0 };
             //int[] dy = { 1, -1, 1, 1, 0, -1, -1, 0, 0 };
 
-            //Лучше так
+            //Р›СѓС‡С€Рµ С‚Р°Рє
             int[] dx = {0, 0, 1, -1, 0};
             int[] dy = {1, -1, 0, 0, 0};
             Queue<KeyValuePair<int, int>> queue = new Queue<KeyValuePair<int, int>>();
@@ -211,15 +211,15 @@ namespace Android_Mines
                 x = current.Key;
                 y = current.Value;
                 for (int s = 0; s < 5; s++)
-                    //пробегаем окрестность элемента (в общем случае с ним граничит ровно 8 элементов + сама клетка),
-                    //а мы берем пять для правильной обработки диагоналей
+                    //РїСЂРѕР±РµРіР°РµРј РѕРєСЂРµСЃС‚РЅРѕСЃС‚СЊ СЌР»РµРјРµРЅС‚Р° (РІ РѕР±С‰РµРј СЃР»СѓС‡Р°Рµ СЃ РЅРёРј РіСЂР°РЅРёС‡РёС‚ СЂРѕРІРЅРѕ 8 СЌР»РµРјРµРЅС‚РѕРІ + СЃР°РјР° РєР»РµС‚РєР°),
+                    //Р° РјС‹ Р±РµСЂРµРј РїСЏС‚СЊ РґР»СЏ РїСЂР°РІРёР»СЊРЅРѕР№ РѕР±СЂР°Р±РѕС‚РєРё РґРёР°РіРѕРЅР°Р»РµР№
                 {
-                    //если такой элемент в матрице существует, и клеточка еще не открыта, и она не бомба
+                    //РµСЃР»Рё С‚Р°РєРѕР№ СЌР»РµРјРµРЅС‚ РІ РјР°С‚СЂРёС†Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚, Рё РєР»РµС‚РѕС‡РєР° РµС‰Рµ РЅРµ РѕС‚РєСЂС‹С‚Р°, Рё РѕРЅР° РЅРµ Р±РѕРјР±Р°
                     if ((x + dx[s] >= 0) && (x + dx[s] < Cols) && (y + dy[s] >= 0) && (y + dy[s] < Rows)
                         && (cellField[x + dx[s], y + dy[s]].CellState == CellState.Closed)
                         && (cellField[x + dx[s], y + dy[s]].MineState == MineState.No))
                     {
-                        if (cellField[x + dx[s], y + dy[s]].MinesAround == 0) // если количество мин в окрестности равно 0.
+                        if (cellField[x + dx[s], y + dy[s]].MinesAround == 0) // РµСЃР»Рё РєРѕР»РёС‡РµСЃС‚РІРѕ РјРёРЅ РІ РѕРєСЂРµСЃС‚РЅРѕСЃС‚Рё СЂР°РІРЅРѕ 0.
                         {
                             queue.Enqueue(new KeyValuePair<int, int>(x + dx[s], y + dy[s]));
                         }
