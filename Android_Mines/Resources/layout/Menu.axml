@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-  <item android:id="@+id/TopButton"
-        android:title="@string/TopButtonText"/>
-  <item android:id="@+id/MainRestartButton"
+ 
+    <item
+        android:id="@+id/TopButton"
+        android:title="@string/TopButtonText" />
+    <item
+        android:id="@+id/MainRestartButton"
         android:title="@string/RestartButtonText" />
-  <item android:id="@+id/MainNewGameButton"
+  
+    <item
+        android:id="@+id/MainNewGameButton"
         android:title="@string/StartNewGameButtonText" />
-  <item android:id="@+id/MainExitButton"
+    <item
+        android:id="@+id/MainExitButton"
         android:title="@string/Exit" />
+  <item
+   android:id="@+id/MainChangeName"
+   android:title="@string/ChangeName" />
+  
+
 </menu>

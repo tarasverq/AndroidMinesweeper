@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="TopButtonText">Топ-10 игроков</string>
-    <string name="ApplicationName">Android_Mines</string>
-    <string name="DefautTop">"[\n  {\n    \"Key\": \"Ибрагим\",\n    \"Value\": 1000\n  },\n  {\n    \"Key\": \"Жан\",\n    \"Value\": 900\n  },\n  {\n    \"Key\": \"Вахтанг\",\n    \"Value\": 800\n  },\n  {\n    \"Key\": \"Трубочист\",\n    \"Value\": 700\n  },\n  {\n    \"Key\": \"666_Нагибатор_666\",\n    \"Value\": 666\n  },\n  {\n    \"Key\": \"Максимильян\",\n    \"Value\": 550\n  },\n  {\n    \"Key\": \"Никитос\",\n    \"Value\": 540\n  },\n  {\n    \"Key\": \"Степаныч\",\n    \"Value\": 500\n  },\n  {\n    \"Key\": \"Пабло\",\n    \"Value\": 350\n  },\n  {\n    \"Key\": \"Ванёчек\",\n    \"Value\": 300\n  }\n]"</string>
+  <string name="ApplicationName">Сапёр</string>
+  <string name="TopButtonText">Топ-10</string>
+  <string name="DefautTop">"[\n  {\n    \"Key\": \"Дмитрий\",\n    \"Value\": 1000\n  },\n  {\n    \"Key\": \"Тимофей\",\n    \"Value\": 900\n  },\n  {\n    \"Key\": \"Максим\",\n    \"Value\": 800\n  },\n  {\n    \"Key\": \"Даниил\",\n    \"Value\": 700\n  },\n  {\n    \"Key\": \"Богдан\",\n    \"Value\": 666\n  },\n  {\n    \"Key\": \"Кирилл\",\n    \"Value\": 550\n  },\n  {\n    \"Key\": \"Ярослав\",\n    \"Value\": 540\n  },\n  {\n    \"Key\": \"Денис\",\n    \"Value\": 500\n  },\n  {\n    \"Key\": \"Пабло\",\n    \"Value\": 350\n  },\n  {\n    \"Key\": \"Никита\",\n    \"Value\": 300\n  }\n]"</string>
   <string name="ExitButtonText">Закончить</string>
   <string name="RestartButtonText">Перезапустить игру</string>
   <string name="StartNewGameButtonText">Начать новую игру</string>
   <string name="Exit">Выход</string>
+  <string name="ChangeName">Сменить имя</string>
+  <string name="GameResults">Результаты игры</string>
+  <string name="Anonimous">Аноним</string>
+  <string name="ResultsFormat">Вы {0}\r\nВаш результат: {1} очков.</string>
+  <string name="Winner">выиграли!</string>
+  <string name="Loser">проиграли. :(</string>
+  <string name="Name">Имя</string>
+  <string name="Points">Очки</string>
+  <string name="StatisticsFormat">Поле: {0}x{1}, мин: {2}.\r\nВсего клеток: {3}, открыто клеток:{{0}}.</string>
+  <string name="AlertName">Имя игрока</string>
+  <string name="AlertText">Введите ваше имя</string>
+  <string name="EmptyNameError">Имя не может быть пустым.</string>
 </resources>

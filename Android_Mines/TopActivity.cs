@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 using Android.Preferences;
 using Android.Widget;
@@ -12,11 +13,11 @@ namespace Android_Mines
     /// <summary>
     /// Activity отвечающая за топ игроков
     /// </summary>
-    [Activity(Label = "Топ-10 игроков", Icon = "@drawable/icon")]
+    [Activity(Label = "@string/TopButtonText", Icon = "@drawable/Icon", ScreenOrientation = ScreenOrientation.Portrait)]
     public class TopActivity : Activity
     {
         private ISharedPreferences prefs;
-        private List<KeyValuePair<string, int>> topDict;
+        private List<KeyValuePair<string, int>> topList;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -25,13 +26,13 @@ namespace Android_Mines
         }
 
         /// <summary>
-        /// Метод выгружает json, и десереализует его в словарь topDict
+        /// Метод выгружает json, и десереализует его в список topList
         /// </summary>
         private void GetTop()
         {
             prefs = PreferenceManager.GetDefaultSharedPreferences(this);
             string json = prefs.GetString("Top-10", GetString(Resource.String.DefautTop));
-            topDict = JsonConvert.DeserializeObject<List<KeyValuePair<string, int>>>(json);
+            topList = JsonConvert.DeserializeObject<List<KeyValuePair<string, int>>>(json);
         }
 
         /// <summary>
@@ -41,10 +42,10 @@ namespace Android_Mines
         {
             GetTop();
             //Сторонний класс для отрисовки текстовых таблиц
-            ConsoleTable table = new ConsoleTable("#", "Имя", "Очки");
+            ConsoleTable table = new ConsoleTable("#", GetString(Resource.String.Name), GetString(Resource.String.Points));
             int i = 1;
             //Сортируем, возможно появился новый лидер!
-            foreach (KeyValuePair<string, int> current in topDict.OrderByDescending(x => x.Value).Take(10))
+            foreach (KeyValuePair<string, int> current in topList.OrderByDescending(x => x.Value).Take(10))
             {
                 table.AddRow(i++, current.Key, current.Value);
             }
@@ -60,17 +61,17 @@ namespace Android_Mines
         /// <param name="points">Очки</param>
         protected void AddToTop(string name, int points)
         {
-            topDict.Add(new KeyValuePair<string, int>(name, points));
+            topList.Add(new KeyValuePair<string, int>(name, points));
             //Можно сразу сохранить
             SaveTop();
         }
 
         /// <summary>
-        /// Сериализовывает словарь с топом и сохраняет в хранилище
+        /// Сериализовывает список с топом и сохраняет в хранилище
         /// </summary>
         protected void SaveTop()
         {
-            string json = JsonConvert.SerializeObject(topDict.OrderByDescending(x => x.Value).Take(10).ToList(), Formatting.Indented);
+            string json = JsonConvert.SerializeObject(topList.OrderByDescending(x => x.Value).Take(10).ToList(), Formatting.Indented);
             prefs.Edit().PutString("Top-10", json).Apply();
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
@@ -8,7 +9,7 @@ using Android.Text;
 
 namespace Android_Mines
 {
-    [Activity(Label = "Сапёр", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "@string/ApplicationName", MainLauncher = true, Icon = "@drawable/Icon", ScreenOrientation = ScreenOrientation.Portrait)]
     public class MainActivity : Activity
     {
         public const string Prefix = "ru.tarasverq.minesweeper.";
@@ -16,15 +17,15 @@ namespace Android_Mines
         private FieldAdapter fieldAdapter;
         private Random rand;
         private GridView field;
-        private string name;
         private TextView statistics;
+        private string name;
         private string statisticsFormat;
 
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
 
-            name = "Аноним";
+           
             statisticsFormat = "";
             rand = new Random((int) DateTime.Now.Ticks);
             prefs = GetPreferences(FileCreationMode.Private);
@@ -34,7 +35,9 @@ namespace Android_Mines
             field = FindViewById<GridView>(Resource.Id.Field);
             field.ItemClick += ItemClick;
 
-            ShowNameAlert();
+            name = prefs.GetString("Name", "");
+            if (string.IsNullOrWhiteSpace(name))
+                ShowNameAlert();
             ShowField();
         }
 
@@ -57,11 +60,9 @@ namespace Android_Mines
                     break;
                 case GameState.Fail:
                     RunEndGame(false);
-                    //ShowAlert(false, fieldAdapter.FieldModel.Points);
                     break;
                 case GameState.Won:
                     RunEndGame(true);
-                    //ShowAlert(true, fieldAdapter.FieldModel.Points);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -78,7 +79,7 @@ namespace Android_Mines
             int fieldResolutionX = rand.Next(10, 20);
             int fieldResolutionY = rand.Next(10, 20);
             Console.WriteLine("Resolution: {0}:{1}", fieldResolutionX, fieldResolutionY);
-            int rnd = rand.Next(12, 20); //Не трогать, иначе minesCount получается 0. Почему?
+            int rnd = rand.Next(12, 22); //Не трогать, иначе minesCount получается 0. Почему?
             int minesCount = (int) Math.Round(fieldResolutionX * fieldResolutionY / 100.0 * rnd);
             Console.WriteLine("Mines: {0}", minesCount);
 
@@ -97,7 +98,7 @@ namespace Android_Mines
             field.NumColumns = fieldResolutionX;
             fieldAdapter = new FieldAdapter(this, fieldResolutionX, fieldResolutionY, minesCount, mSizePx);
             field.Adapter = fieldAdapter;
-            statisticsFormat = string.Format("Поле: {0}x{1}, мин: {2}.\r\nВсего клеток: {3}, открыто клеток:{{0}}.",
+            statisticsFormat = string.Format(GetString(Resource.String.StatisticsFormat),
                 fieldResolutionX, fieldResolutionY, minesCount, fieldResolutionX * fieldResolutionY);
             statistics.Text = string.Format(statisticsFormat, 0);
         }
@@ -109,22 +110,23 @@ namespace Android_Mines
         {
             AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-            alert.SetTitle("Имя игрока");
-            alert.SetMessage("Введите ваше имя");
+            alert.SetTitle(GetString(Resource.String.AlertName));
+            alert.SetMessage(GetString(Resource.String.AlertText));
+            //Убираем возможность закрытия
             alert.SetCancelable(false);
             EditText input = new EditText(this)
             {
-                Text = prefs.GetString("Name", ""),
-                InputType = InputTypes.TextFlagAutoCorrect | InputTypes.TextFlagAutoComplete | InputTypes.TextFlagCapSentences
+                Text = name,
+                InputType =  InputTypes.TextFlagCapSentences| InputTypes.ClassText
             };
             alert.SetView(input);
 
-            alert.SetPositiveButton("Ok", delegate
+            alert.SetPositiveButton("OK", delegate
             {
                 name = input.Text;
                 if (string.IsNullOrEmpty(name))
                 {
-                    Toast.MakeText(BaseContext, "Имя не может быть пустым.", ToastLength.Short).Show();
+                    Toast.MakeText(BaseContext, GetString(Resource.String.EmptyNameError), ToastLength.Short).Show();
                     ShowNameAlert();
                     return;
                 }
@@ -192,6 +194,8 @@ namespace Android_Mines
         {
             menu.Clear();
             MenuInflater.Inflate(Resource.Layout.Menu, menu);
+            IMenuItem item = menu.FindItem(Resource.Id.MainChangeName);
+            item.SetTitle(string.Format("{0} ({1})", GetString(Resource.String.ChangeName), name));
             return base.OnPrepareOptionsMenu(menu);
         }
 
@@ -217,6 +221,9 @@ namespace Android_Mines
                 case Resource.Id.TopButton:
                     Intent activity = new Intent(this, typeof(TopActivity)).SetFlags(ActivityFlags.ReorderToFront);
                     StartActivity(activity);
+                    return true;
+                case Resource.Id.MainChangeName:
+                    ShowNameAlert();
                     return true;
 
             }

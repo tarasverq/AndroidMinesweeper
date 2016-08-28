@@ -1,6 +1,7 @@
 using System;
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 using Android.Widget;
 
@@ -9,7 +10,7 @@ namespace Android_Mines
     /// <summary>
     /// Activity результатов игры, наследуется от TopActivity
     /// </summary>
-    [Activity(Label = "Результаты игры", Icon = "@drawable/icon")]
+    [Activity(Label = "@string/GameResults", Icon = "@drawable/Icon", ScreenOrientation = ScreenOrientation.Portrait)]
     class EndGameActivity : TopActivity
     {
         protected override void OnCreate(Bundle bundle)
@@ -26,13 +27,14 @@ namespace Android_Mines
             newGameBtn.Click += OnNewGameClick;
 
             //Получаем значения переменых
-            string name = Intent.GetStringExtra(MainActivity.Prefix + "Name") ?? "Аноним";
-            name = string.IsNullOrWhiteSpace(name) ? "Аноним" : name;
+            string name = Intent.GetStringExtra(MainActivity.Prefix + "Name") ?? GetString(Resource.String.Anonimous);
+            name = string.IsNullOrWhiteSpace(name) ? GetString(Resource.String.Anonimous) : name;
             int points = Intent.GetIntExtra(MainActivity.Prefix + "Points", 0);
             bool won = Intent.GetBooleanExtra(MainActivity.Prefix + "Won", false);
 
             //Выводим результат, обновляем и сохраняем топ
-            resultsLabel.Text = string.Format("Вы {0}\r\nВаш результат: {1} очков.", won ? "выиграли!" : "проиграли. :(", points);
+            resultsLabel.Text = string.Format(GetString(Resource.String.ResultsFormat),
+                won ? GetString(Resource.String.Winner) : GetString(Resource.String.Loser), points);
             AddToTop(name, points);
             PrintTop();
             SaveTop();
